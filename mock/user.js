@@ -1,3 +1,4 @@
+import Mock from 'mockjs'
 
 const tokens = {
   admin: {
@@ -22,6 +23,17 @@ const users = {
     name: 'Normal Editor'
   }
 }
+
+const userData = Mock.mock({
+  'items|10': [{
+    id: '@id',
+    userName: '@word(6, 10)',
+    loginName: '@word(6, 10)',
+    'sex|1': ['男','女'],
+    mobile: '13234728836',
+    email: 'xxx@gamil.com'
+  }]
+})
 
 export default [
   // user login
@@ -80,5 +92,21 @@ export default [
         data: 'success'
       }
     }
+  },
+
+  {
+    url: '/user/page',
+    type: 'get',
+    response: config => {
+      const items = userData.items
+      return {
+        code: 20000,
+        data: {
+          total: 100,
+          items: items
+        }
+      }
+    }
   }
+
 ]
